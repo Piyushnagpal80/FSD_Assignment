@@ -1,0 +1,150 @@
+<!-- displayData.ejs -->
+<html>
+  <head>
+    <title>User Data</title>
+    <style>
+      body{
+        top: 0;
+        left: 0;
+      }
+            /* style.css */
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .card {
+        flex-basis: calc(20%); /* Adjust the width as needed */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px;
+        background-color: #f7f7f7;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+
+      .card.zoomed {
+        position: fixed;
+        top: 0%;
+        left: 59%;
+        width: 40%;
+        height: 100%;
+        z-index: 1000; /* Ensure the zoomed card is on top */
+        background-color: #f7f7f7;
+        flex-basis: calc(50%);
+      }
+
+      .card.zoomed p{
+        font-size: 18px ;
+        padding: 10px;
+      }
+      .card.zoomed h2{
+        padding: 10px;
+      }
+
+      /* .card.zoomed-content {
+        display: flex;
+        /* justify-content: center; */
+        /* background-color: #fff; */
+        /* padding: 20px; */
+        
+      /* } */
+
+      h2 {
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+
+      p {
+        margin: 5px 0;
+      }
+
+      form{
+        display: flex;
+        align-items: center;
+        justify-content: end;
+      }
+      form div{
+        margin-right: 5px;
+      }
+
+      h1{
+        display: flex;
+        justify-content: center;
+      }
+
+    </style>
+  </head>
+  <body>
+    <h1>Projects Data</h1>
+
+    <!-- <div class="form">     -->
+      <!-- search form -->
+      <form action="/search" method="GET">
+        <div>
+          <label for="frontend">Frontend Technology:</label>
+          <input type="text" id="frontend" name="frontend">
+        </div>
+        <div>
+          <label for="backend">Backend Technology:</label>
+          <input type="text" id="backend" name="backend">
+        </div>
+        <!-- Add more input fields for other search criteria -->
+        <div>
+          <button type="submit">Search</button>
+        </div>
+      </form>
+    <!-- </div> -->
+
+
+    <div class="card-container">
+      <% users.forEach(user => { %>
+        <div class="card">
+          <h2><%= user.Title %></h2>
+          <p>Technologies: <%= user.Technologies %></p>
+          <p>Frontend: <%= user.Frontend %></p>
+          <p>Backend: <%= user.Backend %></p>
+          <p>Databases: <%= user.Databases %></p>
+          <p>Infrastructure: <%= user.Infrastructre %></p>
+          <!-- Add more fields as needed -->
+        </div>
+      <% }); %>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const cards = document.querySelectorAll('.card');
+    
+        cards.forEach((card) => {
+          card.addEventListener('click', () => {
+            card.classList.toggle('zoomed');
+            if (card.classList.contains('zoomed')) {
+              // If the card is zoomed, prevent clicks on the card from closing it
+              card.style.pointerEvents = 'none';
+            } else {
+              // If the card is not zoomed, allow clicks on the card
+              card.style.pointerEvents = 'auto';
+            }
+          });
+        });
+    
+        document.body.addEventListener('click', (event) => {
+          if (!event.target.closest('.zoomed')) {
+            // Click occurred outside of a zoomed card, close all zoomed cards
+            cards.forEach((card) => {
+              card.classList.remove('zoomed');
+              card.style.pointerEvents = 'auto'; // Re-enable clicks on all cards
+            });
+          }
+        });
+      });
+    </script>
+    
+
+  </body>
+
+  
+  
+</html>

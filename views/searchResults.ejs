@@ -1,0 +1,40 @@
+<!-- searchResults.ejs -->
+<html>
+  <head>
+    <title>Search Results</title>
+
+    <Style>
+        .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .card {
+        flex-basis: calc(20%); /* Adjust the width as needed */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px;
+        background-color: #f7f7f7;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    </Style>
+  </head>
+  <body>
+    <h1>Search Results</h1>
+    <div class="card-container">
+      <% projects.forEach(project => { %>
+        <div class="card">
+          <h2><%= project.Title %></h2>
+          <p>Technologies: <%= project.Technologies %></p>
+          <p>Frontend: <%= project.Frontend %></p>
+          <p>Backend: <%= project.Backend %></p>
+          <p>Databases: <%= project.Databases %></p>
+          <p>Infrastructure: <%= project.Infrastructre %></p>
+          <!-- Add more fields as needed -->
+        </div>
+      <% }); %>
+    </div>
+  </body>
+</html>
